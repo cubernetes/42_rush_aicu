@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:34:50 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 20:57:50 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:06:49 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int is_valid_input(int fd, t_heaps *heap)
 	if (line == NULL)
 		return print_err(INPUT_ERROR), ERROR;
 	close(fd);
+	get_next_line(fd);
 	heap->heap_n = heap_count;
 	fill_in_strategy(heap); 
 	return (EXIT_SUCCESS);

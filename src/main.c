@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:26:46 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 20:55:02 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:04:31 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int main (int ac, char *argv[])
 	//start the game
 	start_game(heap);
 	free(heap->heap);
+	free(heap->strategy);
 	free(heap);
 	return (EXIT_SUCCESS);	
 }

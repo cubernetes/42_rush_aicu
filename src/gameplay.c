@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 04:20:47 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 21:07:12 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:27:08 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ int play_nim(int current_heap, t_heaps *heap)
 				return (PLAYER_WINS);
 			/* player's turn */
 			ft_printf("Your move. Between 1-3:\n",STDOUT_FILENO);
-			// taken_sticks = ai_turn(heap, current_heap, sticks_left);
-			taken_sticks = player_turn(heap, sticks_left);
+			taken_sticks = ai_turn(heap, current_heap, sticks_left);
+			// taken_sticks = player_turn(heap, sticks_left);
 			ft_printf("You took %d sticks\n", taken_sticks);
 			//update array
 			sticks_left -= taken_sticks;

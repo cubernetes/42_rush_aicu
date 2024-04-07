@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 04:20:47 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 23:34:12 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 23:38:28 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ int play_nim(int current_heap, t_heaps *heap)
 			taken_sticks = ai_turn(heap, current_heap, sticks_left);
 			ft_printf("AI took %d stick%s\n\n", taken_sticks, taken_sticks == 1 ? "" : "s");
 			my_sleep();
-			ft_printf("\033[H\033[2J\033[3J");
+			// ft_printf("\033[H\033[2J\033[3J");
+			ft_printf("\033[H\033[2J");
 			// update array
 			sticks_left -= taken_sticks;
 			heap->heap[current_heap] = sticks_left; 
@@ -147,7 +148,8 @@ int play_nim(int current_heap, t_heaps *heap)
 			taken_sticks = player_turn(heap, sticks_left);
 			ft_printf("You took %d stick%s\n\n", taken_sticks, taken_sticks == 1 ? "" : "s");
 			my_sleep();
-			ft_printf("\033[H\033[2J\033[3J");
+			// ft_printf("\033[H\033[2J\033[3J");
+			ft_printf("\033[H\033[2J");
 			//update array
 			sticks_left -= taken_sticks;
 			heap->heap[current_heap] = sticks_left;
@@ -165,7 +167,7 @@ void	start_game(t_heaps *heap)
 	
 	current_heap = heap->heap_n;
 	if (play_nim(current_heap, heap) == PLAYER_WINS)
-		ft_printf("Player wins!\n");
+		ft_printf("You win!!!\n");
 	else
-		ft_printf("AI wins!\n");
+		ft_printf("AI wins!!!\n");
 }

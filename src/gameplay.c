@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 04:20:47 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 23:38:28 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 23:40:19 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	my_sleep(void)
 	long	i;
 
 	i = 0;
-	while (i < 2000000000)
+	while (i < 20000000)
 		i += 1;
 }
 
@@ -105,6 +105,8 @@ int player_turn(t_heaps *heap, int sticks_left)
 		line = get_next_line(fd);
 		value = ft_atoi(line);
 	}
+	close(fd);
+	get_next_line(fd);
 	if (line)
 	{
 		taken = value;

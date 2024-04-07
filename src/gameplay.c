@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 04:20:47 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 21:27:08 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 23:34:12 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,28 @@ void repeat_string(char *str, size_t n)
 		ft_printf("%s", str);
 }
 
+void	my_sleep(void)
+{
+	long	i;
+
+	i = 0;
+	while (i < 2000000000)
+		i += 1;
+}
+
 void print_board(t_heaps *heap)
 {
 	size_t i;
 
+	ft_printf("The board:\n");
 	i = (size_t)-1;
 	while (++i < heap->heap_n)
 	{
+		if (heap->heap[i] == 0)
+			continue;
 		ft_printf("%d: ", (int)heap->heap[i]);
-		repeat_string("| ", heap->heap[i]);
-		ft_printf("\n", STDOUT_FILENO);
+		repeat_string(" |", heap->heap[i]);
+		ft_printf("\n");
 	}
 }
 
@@ -70,19 +82,6 @@ int	ai_turn(t_heaps *heap, int current_heap, int sticks_left)
 		take = win_state(sticks_left);	
 	else
 		take = lose_state(sticks_left);	
-	// if (current_heap > 0 && (heap->heap[current_heap - 1] % 4) == 1)
-	// {
-	// 	if ((heap->heap[current_heap] % 4) == 1)
-	// 		take = 1;
-	// 	else if ((heap->heap[current_heap] % 4) == 0) /* above heap is 4k+1 and cur heap is 4k, but we want p2 to start on the next heap so we should NOT take 3. Take either 2 or 1, in which one are the chances of ai higher????*/
-	// 		take = 1; // or 2
-	// 	else if ((heap->heap[current_heap] % 4) == 2)
-	// 		take = 2; // leave them with 4, take the rest
-	// 	else if ((heap->heap[current_heap] % 4) == 3)
-	// 		take = 3;
-	// }
-	// else
-	// 	take = win_state(sticks_left);
 	return (take);
 }
 
@@ -94,13 +93,15 @@ int player_turn(t_heaps *heap, int sticks_left)
 	static int fd = -2;
 	
 	print_board(heap);
+	ft_printf("Your move (1 to 3): ");
 	fd = open("/dev/tty", O_RDONLY);
 	line = get_next_line(fd);
 	value = ft_atoi(line);
 	while (line && (value < 1 || value > 3 || value > sticks_left)) // wrong input
 	{
 		free(line);
-		ft_printf("Try again. Between 1-3:\n", STDOUT_FILENO);
+		ft_printf("\033[A\rTry again (must be between 1 and 3): ");
+		ft_printf("          " "\b\b\b\b\b\b\b\b\b\b");
 		line = get_next_line(fd);
 		value = ft_atoi(line);
 	}
@@ -117,15 +118,17 @@ int play_nim(int current_heap, t_heaps *heap)
 	int sticks_left;
 	size_t taken_sticks;
 	
+	ft_printf("\033[H\033[2J\033[3J");
 	while (--current_heap >= 0)
 	{
 		sticks_left = heap->heap[current_heap];
 		while (sticks_left > 0)
 		{
 			/* ai's turn */
-			ft_printf("AI's move:\n", STDOUT_FILENO);
 			taken_sticks = ai_turn(heap, current_heap, sticks_left);
-			ft_printf("AI took %d sticks\n", taken_sticks);
+			ft_printf("AI took %d stick%s\n\n", taken_sticks, taken_sticks == 1 ? "" : "s");
+			my_sleep();
+			ft_printf("\033[H\033[2J\033[3J");
 			// update array
 			sticks_left -= taken_sticks;
 			heap->heap[current_heap] = sticks_left; 
@@ -140,14 +143,14 @@ int play_nim(int current_heap, t_heaps *heap)
 			if (sticks_left == 0 && current_heap == 0)
 				return (PLAYER_WINS);
 			/* player's turn */
-			ft_printf("Your move. Between 1-3:\n",STDOUT_FILENO);
-			taken_sticks = ai_turn(heap, current_heap, sticks_left);
-			// taken_sticks = player_turn(heap, sticks_left);
-			ft_printf("You took %d sticks\n", taken_sticks);
+			// taken_sticks = ai_turn(heap, current_heap, sticks_left);
+			taken_sticks = player_turn(heap, sticks_left);
+			ft_printf("You took %d stick%s\n\n", taken_sticks, taken_sticks == 1 ? "" : "s");
+			my_sleep();
+			ft_printf("\033[H\033[2J\033[3J");
 			//update array
 			sticks_left -= taken_sticks;
 			heap->heap[current_heap] = sticks_left;
-			//if sticks == 0 AND heaps == 0, AI wins
 			if (sticks_left == 0 && current_heap == 0)
 				return(AI_WINS);
 		}
@@ -162,7 +165,7 @@ void	start_game(t_heaps *heap)
 	
 	current_heap = heap->heap_n;
 	if (play_nim(current_heap, heap) == PLAYER_WINS)
-		ft_printf("Player wins!\n", STDOUT_FILENO);
+		ft_printf("Player wins!\n");
 	else
-		ft_printf("AI wins!\n", STDOUT_FILENO);
+		ft_printf("AI wins!\n");
 }

@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:26:46 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 21:52:28 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 23:14:58 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ int main (int ac, char *argv[])
 	if (parse_and_fill(ac, argv, heap) == -1)
 		return (free(heap->heap), free(heap), ERROR);
 
-	for (int i = 0; i < (int)heap->heap_n; ++i)
-		ft_printf("%d: %d: %s\n", i, heap->heap[i], heap->strategy[i] ? "WIN" : "LOSE");
-	// return (0);
 	//start the game
 	start_game(heap);
 	free(heap->heap);

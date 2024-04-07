@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 04:20:47 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 20:43:34 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:00:35 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int lose_state(int sticks)
 void repeat_string(char *str, size_t n)
 {
 	while (n--)
-		ft_putstr_fd(str, STDOUT_FILENO);
+		ft_printf("%s", str);
 }
 
 void print_board(t_heaps *heap)
@@ -57,7 +57,7 @@ void print_board(t_heaps *heap)
 	{
 		ft_printf("%d: ", (int)heap->heap[i]);
 		repeat_string("| ", heap->heap[i]);
-		ft_putendl_fd("", STDOUT_FILENO);
+		ft_printf("\n", STDOUT_FILENO);
 	}
 }
 
@@ -100,7 +100,7 @@ int player_turn(t_heaps *heap, int sticks_left)
 	while (line && (value < 1 || value > 3 || value > sticks_left)) // wrong input
 	{
 		free(line);
-		ft_putendl_fd("Try again. Between 1-3:", STDOUT_FILENO);
+		ft_printf("Try again. Between 1-3:\n", STDOUT_FILENO);
 		line = get_next_line(fd);
 		value = ft_atoi(line);
 	}
@@ -120,38 +120,32 @@ int play_nim(int current_heap, t_heaps *heap)
 	while (--current_heap >= 0)
 	{
 		sticks_left = heap->heap[current_heap];
-		// printf("cur heap = %i\n", current_heap);
-		// printf(" = %i\n", current_heap);
-		printf("Sticks at the start of the heap = %i\n", sticks_left);
 		while (sticks_left > 0)
 		{
 			/* ai's turn */
-			ft_putendl_fd("AI's move:", STDOUT_FILENO);
+			ft_printf("AI's move:\n", STDOUT_FILENO);
 			taken_sticks = ai_turn(heap, current_heap, sticks_left);
 			ft_printf("AI took %d sticks\n", taken_sticks);
-			//update array
+			// update array
 			sticks_left -= taken_sticks;
-			// printf("Sticks left = %i\n", sticks_left);
 			heap->heap[current_heap] = sticks_left; 
-			//check if sticks left are 0 and if there are still heaps
+			// check if sticks left are 0 and if there are still heaps
 			// if true, move on to the upper heap and update total sticks
 			if (sticks_left == 0 && current_heap > 0)
 			{
 				current_heap--;
 				sticks_left = heap->heap[current_heap];
-				// printf("Sticks left (next heap) = %i\n", sticks_left);
 			}
-			//if sticks == 0 AND heaps == 0, player wins instead of AI
+			// if sticks == 0 AND heaps == 0, player wins instead of AI
 			if (sticks_left == 0 && current_heap == 0)
 				return (PLAYER_WINS);
 			/* player's turn */
-			ft_putendl_fd("Your move. Between 1-3:",STDOUT_FILENO);
+			ft_printf("Your move. Between 1-3:\n",STDOUT_FILENO);
 			taken_sticks = ai_turn(heap, current_heap, sticks_left);
 			// taken_sticks = player_turn(heap, sticks_left);
 			ft_printf("You took %d sticks\n", taken_sticks);
 			//update array
 			sticks_left -= taken_sticks;
-			// printf("Sticks left = %i\n", sticks_left);
 			heap->heap[current_heap] = sticks_left;
 			//if sticks == 0 AND heaps == 0, AI wins
 			if (sticks_left == 0 && current_heap == 0)
@@ -168,7 +162,7 @@ void	start_game(t_heaps *heap)
 	
 	current_heap = heap->heap_n;
 	if (play_nim(current_heap, heap) == PLAYER_WINS)
-		ft_putendl_fd("Player wins!", STDOUT_FILENO);
+		ft_printf("Player wins!\n", STDOUT_FILENO);
 	else
-		ft_putendl_fd("AI wins!", STDOUT_FILENO);
+		ft_printf("AI wins!\n", STDOUT_FILENO);
 }

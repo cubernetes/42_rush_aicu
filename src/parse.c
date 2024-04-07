@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:34:50 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 20:38:31 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 20:57:50 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int is_valid_input(int fd, t_heaps *heap)
 			return free(heap->heap), print_err(INPUT_ERROR), ERROR;
 		heap->heap = ft_realloc(&heap->heap, heap_count + 1, 0);
 		heap->heap[heap_count] = (size_t)cur_input; //fill array
-		printf("sticks = %zu and heap = %zu\n", heap->heap[heap_count], heap_count);
 		heap_count++;
 		line = get_next_line(fd);		
 	}

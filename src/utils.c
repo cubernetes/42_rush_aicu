@@ -6,7 +6,7 @@
 /*   By: dkoca <dkoca@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:50:35 by dkoca             #+#    #+#             */
-/*   Updated: 2024/04/07 06:39:44 by dkoca            ###   ########.fr       */
+/*   Updated: 2024/04/07 21:01:12 by dkoca            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void print_err(int err)
 {
 	if (err == ERROR)
-		ft_putendl_fd("ERROR.\n", STDERR_FILENO);
+		ft_putendl_fd("ERROR.", STDERR_FILENO);
 	else if (err == INPUT_ERROR)
-		ft_putendl_fd("WRONG INPUT.\n", STDERR_FILENO);
+		ft_putendl_fd("WRONG INPUT.", STDERR_FILENO);
 	else if (err == ENOMEM)
-		ft_putendl_fd("NO MEMORY LEFT.\n", STDERR_FILENO);
+		ft_putendl_fd("NO MEMORY LEFT.", STDERR_FILENO);
 	else if (err == INVALID_MOVE)
-		ft_putendl_fd("INVALID MOVE. TRY AGAIN.\n", STDERR_FILENO);
+		ft_putendl_fd("INVALID MOVE. TRY AGAIN.", STDERR_FILENO);
 	else if (err == INCORRECT_BOARD)
-		ft_putendl_fd("BOARD COULD NOT BE CREATED.\n", STDERR_FILENO);
+		ft_putendl_fd("BOARD COULD NOT BE CREATED.", STDERR_FILENO);
 }
 
 size_t *ft_realloc(size_t **ptr, int size, int i)
